@@ -31,6 +31,9 @@ namespace FPS
         [SerializeField] float rotateSpeed;
         float zRot, xRot;
 
+        [Header("Status")]
+        public float Hp;
+
         [Header("UI")]
         [SerializeField] UIManager UImanager;
 
@@ -43,6 +46,7 @@ namespace FPS
 
         [SerializeField] Transform frontPos1;
         [SerializeField] Transform frontPos2;
+        [SerializeField] float spread;
 
         [Header("Missile")]
         [SerializeField] float missileDelay;
@@ -116,6 +120,7 @@ namespace FPS
             if (homingCurDelay >= homingReloadDelay && loadedHoming < maxHoming && LockonUIList.Count <= 0)
             {
                 loadedHoming++;
+                curHoming--;
                 homingCurDelay = 0f;
             }
             else if (loadedHoming < maxHoming)
@@ -176,7 +181,6 @@ namespace FPS
                         ((viewportPos.x * canvasRect.sizeDelta.x) - (canvasRect.sizeDelta.x * 0.5f)),
                         ((viewportPos.y * canvasRect.sizeDelta.y) - (canvasRect.sizeDelta.y * 0.5f))
                         );
-
                     try
                     {
                         LockonUIList[i].anchoredPosition = worldObjPos;
@@ -244,8 +248,8 @@ namespace FPS
             {
                 if (curDelay >= machinegunDelay)
                 {
-                    Instantiate(bullet, frontPos1.position, frontPos1.rotation * Quaternion.Euler(90, 0, 0));
-                    Instantiate(bullet, frontPos2.position, frontPos2.rotation * Quaternion.Euler(90, 0, 0));
+                    Instantiate(bullet, frontPos1.position, frontPos1.rotation * Quaternion.Euler(90, 0, 0) * Quaternion.Euler(Random.insideUnitSphere * spread));
+                    Instantiate(bullet, frontPos2.position, frontPos2.rotation * Quaternion.Euler(90, 0, 0) * Quaternion.Euler(Random.insideUnitSphere * spread));
                     curDelay = 0f;
                 }
                 curDelay += Time.deltaTime;
@@ -322,6 +326,28 @@ namespace FPS
             AimPoint.GetComponent<RectTransform>().anchoredPosition = worldObject_ScreenPos;
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Enemy"))
+            {
+                OnDamage(other.GetComponent<EnemyBase>().damage);
+            }
+
+            if (other.CompareTag("EnemyBullet"))
+            {
+                OnDamage(other.GetComponent<EnemyBullet>().damage);
+            }
+        }
+
+        public void OnDamage(float damage)
+        {
+            Hp -= damage;
+
+            if (Hp <= 0)
+            {
+
+            }
+        }
     }
 
 }

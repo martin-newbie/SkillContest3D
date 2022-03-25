@@ -61,11 +61,6 @@ namespace FPS
 
             return Mathf.Lerp(abbc, bccd, t);
         }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            
-        }
     }
 
 }

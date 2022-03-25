@@ -11,14 +11,6 @@ namespace FPS
         {
             transform.Translate(Vector3.up * Time.deltaTime * moveSpeed);
         }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("Wall"))
-            {
-                Destroy(this.gameObject);
-            }
-        }
     }
 
 }
