@@ -204,8 +204,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2883be0e141dec4faedb627ce149e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 45
   moveSpeed: 80
+  explosion: {fileID: 846731448561107281, guid: 29ff18910c623cd4e85f70bb8359ef36, type: 3}
 --- !u!54 &3729833263720574637
 Rigidbody:
   m_ObjectHideFlags: 0
