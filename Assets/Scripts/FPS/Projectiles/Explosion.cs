@@ -17,7 +17,7 @@ namespace FPS
         {
             if(other.CompareTag("Enemy"))
             {
-                other.GetComponent<EnemyBase>().OnDamage(damage);
+                other.GetComponentInParent<EnemyBase>().OnDamage(damage);
             }
         }
     }

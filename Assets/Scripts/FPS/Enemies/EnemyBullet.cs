@@ -7,7 +7,7 @@ namespace FPS
     public class EnemyBullet : MonoBehaviour
     {
         public float damage;
-        [SerializeField] float moveSpeed = 15f;
+        public float moveSpeed = 15f;
 
         void Start()
         {

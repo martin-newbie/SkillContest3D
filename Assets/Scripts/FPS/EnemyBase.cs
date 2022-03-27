@@ -9,7 +9,13 @@ namespace FPS
 
         public float Hp;
         public float moveSpeed;
+        float defaultSpeed;
         public float damage;
+
+        void Start()
+        {
+            defaultSpeed = moveSpeed;
+        }
 
         public virtual void OnDamage(float damage)
         {
@@ -17,15 +23,19 @@ namespace FPS
             StartCoroutine(Stiffen());
             if (Hp <= 0)
             {
-                gameObject.SetActive(false);
-                //Destroy(this.gameObject);
+                DestroyEnemy();
             }
         }
 
-
-        IEnumerator Stiffen()
+        protected virtual void DestroyEnemy()
         {
-            float temp = moveSpeed;
+            Destroy(gameObject, 5f);
+            gameObject.SetActive(false);
+        }
+
+        protected virtual IEnumerator Stiffen()
+        {
+            float temp = defaultSpeed;
 
             moveSpeed = temp / 2;
             yield return new WaitForSeconds(0.2f);

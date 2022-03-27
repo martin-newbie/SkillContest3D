@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace FPS
@@ -40,6 +41,7 @@ namespace FPS
         [Header("MachineGun")]
         [SerializeField] float machinegunDelay;
         [SerializeField] Projectile bullet;
+        [SerializeField] Transform[] guns;
 
         [SerializeField] GameObject FrontGun_1;
         [SerializeField] GameObject FrontGun_2;
@@ -109,6 +111,11 @@ namespace FPS
                     HomingAttack();
                     break;
             }
+        }
+
+        void GunsRotate()
+        {
+            guns.ToList().ForEach(item => item.Rotate(Vector3.back * Time.deltaTime * 1000f));
         }
 
         private void FixedUpdate()
@@ -246,6 +253,7 @@ namespace FPS
         {
             if (Input.GetMouseButton(0))
             {
+                GunsRotate();
                 if (curDelay >= machinegunDelay)
                 {
                     Instantiate(bullet, frontPos1.position, frontPos1.rotation * Quaternion.Euler(90, 0, 0) * Quaternion.Euler(Random.insideUnitSphere * spread));
@@ -282,7 +290,7 @@ namespace FPS
 
             Vector3 pos = transform.position;
             pos.x = Mathf.Clamp(pos.x, -15f, 15f);
-            pos.y = Mathf.Clamp(pos.y, 0f, 25f);
+            pos.y = Mathf.Clamp(pos.y, 1f, 25f);
             transform.position = pos;
 
             Container.localRotation = Quaternion.Euler(new Vector3(xRot, 0, zRot));
@@ -330,7 +338,7 @@ namespace FPS
         {
             if (other.CompareTag("Enemy"))
             {
-                OnDamage(other.GetComponent<EnemyBase>().damage);
+                OnDamage(other.GetComponentInParent<EnemyBase>().damage);
             }
 
             if (other.CompareTag("EnemyBullet"))

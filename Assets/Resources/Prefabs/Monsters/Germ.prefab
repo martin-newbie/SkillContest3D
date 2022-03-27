@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 5113248332273269936}
   - component: {fileID: 5113248332273269942}
   - component: {fileID: 5113248332273269943}
+  - component: {fileID: 6145225081815907964}
   m_Layer: 0
   m_Name: Germ
   m_TagString: Enemy
@@ -128,6 +129,20 @@ MonoBehaviour:
   GermBody: {fileID: 5113248331145756424}
   ShootPos: {fileID: 5113248330838204870}
   bullet: {fileID: 9048443515475094066, guid: 2efda5ddc89d2814c8637397233f77a5, type: 3}
+--- !u!136 &6145225081815907964
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5113248332273269937}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5113248332837224566
 GameObject:
   m_ObjectHideFlags: 0

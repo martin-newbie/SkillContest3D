@@ -37,7 +37,7 @@ namespace FPS
 
         void Update()
         {
-            if (timerCur > timerMax) return;
+            if (timerCur > timerMax) Destroy(gameObject);
 
             timerCur += Time.deltaTime * speed;
 
