@@ -133,7 +133,7 @@ namespace FPS
 
         public void GameClear()
         {
-
+            UIManager.Instance.GameClearUI(score, PlayerHp, 100 - PainGauge);
         }
     }
 

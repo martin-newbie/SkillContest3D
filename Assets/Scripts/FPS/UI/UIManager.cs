@@ -6,12 +6,13 @@ using UnityEngine.UI;
 
 namespace FPS
 {
-    public class UIManager : MonoBehaviour
+    public class UIManager : Singleton<UIManager>
     {
         [Header("Objects")]
         [SerializeField] List<Image> WeaponImages = new List<Image>();
         [SerializeField] Image HPGauge;
         [SerializeField] Image PainGauge;
+        public GameClear gameClear;
 
         [Header("Missile")]
         [SerializeField] Text CurMissile;
@@ -34,6 +35,11 @@ namespace FPS
         {
             HPGauge.fillAmount = GameManager.Instance.PlayerHp / 100f;
             PainGauge.fillAmount = GameManager.Instance.PainGauge / 100f;
+        }
+
+        public void GameClearUI(float score, float hp, float pg)
+        {
+            gameClear.ResultPrint(score, hp, pg);
         }
 
         public void GetHomingInformation(int curCount, int loaded, int max)

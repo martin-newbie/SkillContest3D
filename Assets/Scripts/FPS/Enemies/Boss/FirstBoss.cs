@@ -97,6 +97,8 @@ namespace FPS
                 DefaultAttack();
                 yield return new WaitForSeconds(1f);
             }
+
+            GameManager.Instance.GameClear();
         }
 
         IEnumerator EyeMoveCoroutine()
