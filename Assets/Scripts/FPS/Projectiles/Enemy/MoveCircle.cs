@@ -5,8 +5,8 @@ using UnityEngine;
 public class MoveCircle : MonoBehaviour
 {
 
-    public float moveSpeed;
-    public float amount;
+    public float moveSpeed = 5f;
+    public float amount = 12f;
     float move;
     Vector3 originPos;
     void Start()

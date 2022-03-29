@@ -74,14 +74,16 @@ namespace FPS
         float homingCurDelay;
 
         float curDelay;
-
-
+        Vector3 camOriginPos;
+        bool bulletProof = false;
         void Start()
         {
+            camOriginPos = FrontCam.transform.localPosition;
             canvasRect = mainCanvas.GetComponent<RectTransform>();
             loadedMissile = maxMissile;
             loadedHoming = maxHoming;
             UImanager.GetMissileInformation(curMissile, loadedMissile, maxMissile);
+            Hp = 100f;
         }
 
         void Update()
@@ -98,7 +100,7 @@ namespace FPS
 
             HomingLoad();
             UImanager.GetMissileInformation(curMissile, loadedMissile, maxMissile);
-
+            GameManager.Instance.PlayerHp = Hp;
             switch (weaponState)
             {
                 case PlayerWeapon.MACHINEGUN:
@@ -336,12 +338,12 @@ namespace FPS
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Enemy"))
+            if (other.CompareTag("Enemy") && !bulletProof)
             {
                 OnDamage(other.GetComponentInParent<EnemyBase>().damage);
             }
 
-            if (other.CompareTag("EnemyBullet"))
+            if (other.CompareTag("EnemyBullet") && !bulletProof)
             {
                 OnDamage(other.GetComponent<EnemyBullet>().damage);
             }
@@ -350,11 +352,30 @@ namespace FPS
         public void OnDamage(float damage)
         {
             Hp -= damage;
+            StartCoroutine(CameraShake(0.3f, 2f));
+            StartCoroutine(BulletProofCoroutine(1.5f));
+        }
 
-            if (Hp <= 0)
+        IEnumerator BulletProofCoroutine(float delay)
+        {
+            bulletProof = true;
+            yield return new WaitForSeconds(delay);
+            bulletProof = false;
+        }
+
+        IEnumerator CameraShake(float _time, float _amount)
+        {
+            float curTime = _time;
+
+            while (curTime > 0f)
             {
-
+                Vector3 randPos = Random.insideUnitSphere * _amount + camOriginPos;
+                FrontCam.transform.localPosition = randPos;
+                curTime -= Time.deltaTime;
+                yield return null;
             }
+
+            FrontCam.transform.localPosition = camOriginPos;
         }
     }
 

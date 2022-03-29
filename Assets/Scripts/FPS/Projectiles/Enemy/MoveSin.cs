@@ -12,9 +12,9 @@ namespace FPS
 
     public class MoveSin : MonoBehaviour
     {
-        public float amount;
-        public float moveSpeed;
-        [SerializeField] MoveType moveType;
+        public float amount = 12f;
+        public float moveSpeed = 5f;
+        public MoveType moveType;
 
         float move;
         Vector3 originPos;

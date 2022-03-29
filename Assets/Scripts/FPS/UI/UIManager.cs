@@ -10,6 +10,8 @@ namespace FPS
     {
         [Header("Objects")]
         [SerializeField] List<Image> WeaponImages = new List<Image>();
+        [SerializeField] Image HPGauge;
+        [SerializeField] Image PainGauge;
 
         [Header("Missile")]
         [SerializeField] Text CurMissile;
@@ -30,7 +32,8 @@ namespace FPS
 
         void Update()
         {
-
+            HPGauge.fillAmount = GameManager.Instance.PlayerHp / 100f;
+            PainGauge.fillAmount = GameManager.Instance.PainGauge / 100f;
         }
 
         public void GetHomingInformation(int curCount, int loaded, int max)
