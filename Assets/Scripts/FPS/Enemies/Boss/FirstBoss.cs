@@ -20,14 +20,8 @@ namespace FPS
         [SerializeField] Image hpBar2;
         float fillAmount;
 
-        [Header("Monsters")]
-        [SerializeField] GameObject Germ;
-
         [Header("Bullet")]
         [SerializeField] GameObject straightBullet;
-        [SerializeField] GameObject SinVBullet;
-        [SerializeField] GameObject SinHBullet;
-        [SerializeField] GameObject SinHVBullet;
 
         bool madness;
         float maxHp;
@@ -39,6 +33,7 @@ namespace FPS
             canvas = FindObjectOfType(typeof(Canvas)) as Canvas;
             player = FindObjectOfType(typeof(Player)) as Player;
             StartCoroutine(EyeMoveCoroutine());
+            StartCoroutine(BossAttack());
             maxHp = Hp;
 
         }
@@ -56,18 +51,20 @@ namespace FPS
             hpBar2.fillAmount = Hp / maxHp;
         }
 
-        void FollowAttack()
+        void DefaultAttack()
         {
+            Vector3 spawnPos = Eye.transform.position;
+
             Vector3 dir = player.transform.position - Eye.transform.position;
             Quaternion rot = Quaternion.LookRotation(dir.normalized);
 
-            GameObject temp = Instantiate(straightBullet, Eye.transform.position, rot);
-            temp.GetComponent<MoveForward>().moveSpeed = 15f;
-        }
+            int offset = 120 / 5;
+            for (int i = offset * -2; i < 120 - 2 * offset; i += offset)
+            {
+                GameObject temp = Instantiate(straightBullet, spawnPos, rot * Quaternion.Euler(0, i, 0));
+                temp.GetComponent<MoveForward>().moveSpeed = 30f;
+            }
 
-        void MonsterSpawn()
-        {
-            GameObject temp = Instantiate(Germ, Eye.transform.position, Quaternion.identity);
         }
 
         void EyeMove()
@@ -92,6 +89,16 @@ namespace FPS
                 finished = true;
             }
         }
+
+        IEnumerator BossAttack()
+        {
+            while (!finished)
+            {
+                DefaultAttack();
+                yield return new WaitForSeconds(1f);
+            }
+        }
+
         IEnumerator EyeMoveCoroutine()
         {
             yield return null;
@@ -102,9 +109,6 @@ namespace FPS
                 eyePos.x = randPos.x;
                 eyePos.y = -1f;
                 eyePos.z = randPos.y;
-                int rand = Random.Range(0, 2);
-                if (rand == 0) FollowAttack();
-                else MonsterSpawn();
 
                 yield return new WaitForSeconds(eyeDelay);
             }

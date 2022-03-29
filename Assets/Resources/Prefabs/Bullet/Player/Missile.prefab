@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 45
-  moveSpeed: 80
+  moveSpeed: 250
   explosion: {fileID: 846731448561107281, guid: 29ff18910c623cd4e85f70bb8359ef36, type: 3}
 --- !u!54 &3729833263720574637
 Rigidbody:

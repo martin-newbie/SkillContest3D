@@ -6,6 +6,10 @@ namespace FPS
 {
     public class Bullet : Projectile
     {
+        private void Start()
+        {
+            Destroy(gameObject, 25f);
+        }
 
         void Update()
         {

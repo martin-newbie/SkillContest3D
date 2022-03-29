@@ -20,7 +20,6 @@ namespace FPS
         public virtual void OnDamage(float damage)
         {
             Hp -= damage;
-            StartCoroutine(Stiffen());
             if (Hp <= 0)
             {
                 DestroyEnemy();
@@ -29,17 +28,9 @@ namespace FPS
 
         protected virtual void DestroyEnemy()
         {
+            GameManager.Instance.Score = 10f;
             Destroy(gameObject, 5f);
             gameObject.SetActive(false);
-        }
-
-        protected virtual IEnumerator Stiffen()
-        {
-            float temp = defaultSpeed;
-
-            moveSpeed = temp / 2;
-            yield return new WaitForSeconds(0.2f);
-            moveSpeed = temp;
         }
     }
 

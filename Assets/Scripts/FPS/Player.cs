@@ -291,20 +291,12 @@ namespace FPS
             transform.Translate(new Vector3(horizontal, vertical, 0) * Time.deltaTime * moveSpeed);
 
             Vector3 pos = transform.position;
-            pos.x = Mathf.Clamp(pos.x, -15f, 15f);
-            pos.y = Mathf.Clamp(pos.y, 1f, 25f);
+            pos.x = Mathf.Clamp(pos.x, -150f, 150f);
+            pos.y = Mathf.Clamp(pos.y, 25f, 50f);
             transform.position = pos;
 
             Container.localRotation = Quaternion.Euler(new Vector3(xRot, 0, zRot));
 
-            Vector3 vec = Wall.position - FrontCam.transform.position;
-            vec.Normalize();
-            Quaternion rotation = Quaternion.LookRotation(vec);
-
-            rotation.x = 0;
-            rotation.z = 0;
-
-            FrontCam.transform.localRotation = rotation;
         }
 
         void SetCamera()
