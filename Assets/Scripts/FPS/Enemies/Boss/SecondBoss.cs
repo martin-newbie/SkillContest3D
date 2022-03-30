@@ -9,7 +9,7 @@ namespace FPS
     {
         [HideInInspector] public Canvas canvas;
         Player player;
-        Vector3[] eyePos;
+        Vector3[] eyePos = new Vector3[2];
         Animator anim;
         bool divided = false;
         [Header("Objects")]
@@ -40,7 +40,7 @@ namespace FPS
             canvas = FindObjectOfType(typeof(Canvas)) as Canvas;
             player = FindObjectOfType(typeof(Player)) as Player;
             anim = GetComponent<Animator>();
-
+            maxHp = Hp;
             StartCoroutine(EyeMoveCoroutine());
             StartCoroutine(AttackCoroutine());
         }
