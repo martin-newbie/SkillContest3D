@@ -59,7 +59,7 @@ namespace FPS
             TerrainMove();
             ScoreLogic();
 
-            if (Input.GetKeyDown(KeyCode.Space)) Score += 100f;
+            if (Input.GetKeyDown(KeyCode.Space)) Score = 100f;
         }
 
         void ScoreLogic()
@@ -125,7 +125,7 @@ namespace FPS
 
         void MonsterSpawn()
         {
-            Vector3 pos = player.transform.position + new Vector3(Random.Range(-30f, 30f), Random.Range(-25f, 25f), 0f);
+            Vector3 pos = player.transform.position + new Vector3(Random.Range(-30f, 30f), Random.Range(-10f, 25f), 0f);
             GameObject monster = Instantiate(Bacteria, pos, Quaternion.identity);
         }
 

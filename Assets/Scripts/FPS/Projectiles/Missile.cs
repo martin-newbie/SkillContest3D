@@ -10,7 +10,7 @@ namespace FPS
 
         void Start()
         {
-
+            Destroy(gameObject, 25f);
         }
 
         void Update()
