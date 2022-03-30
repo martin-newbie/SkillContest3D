@@ -34,6 +34,7 @@ namespace FPS
         float tempScore;
         [SerializeField] Text TempScore;
         [SerializeField] Text RealScore;
+        [SerializeField] Player player;
 
         [Header("Map Move")]
         public List<GameObject> terrain = new List<GameObject>();
@@ -124,7 +125,7 @@ namespace FPS
 
         void MonsterSpawn()
         {
-            Vector3 pos = new Vector3(Random.Range(-150f, 150f), Random.Range(25f, 50f), 100f);
+            Vector3 pos = player.transform.position + new Vector3(Random.Range(-30f, 30f), Random.Range(-25f, 25f), 0f);
             GameObject monster = Instantiate(Bacteria, pos, Quaternion.identity);
         }
 

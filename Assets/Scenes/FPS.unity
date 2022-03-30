@@ -19820,6 +19820,7 @@ MonoBehaviour:
   IsGameOver: 0
   TempScore: {fileID: 1896236626}
   RealScore: {fileID: 87962569}
+  player: {fileID: 489036981}
   terrain:
   - {fileID: 462787958}
   - {fileID: 147458837}
