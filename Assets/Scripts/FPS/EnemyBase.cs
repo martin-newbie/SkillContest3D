@@ -11,6 +11,7 @@ namespace FPS
         public float moveSpeed;
         float defaultSpeed;
         public float damage;
+        public float score = 10f;
 
         void Start()
         {
@@ -28,7 +29,7 @@ namespace FPS
 
         protected virtual void DestroyEnemy()
         {
-            GameManager.Instance.Score = 10f;
+            GameManager.Instance.Score = score;
             Destroy(gameObject, 5f);
             gameObject.SetActive(false);
         }

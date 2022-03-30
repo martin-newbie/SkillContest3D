@@ -146,6 +146,7 @@ MonoBehaviour:
   Hp: 105
   moveSpeed: 10
   damage: 3
+  score: 50
   bullet: {fileID: 9048443515475094066, guid: 2efda5ddc89d2814c8637397233f77a5, type: 3}
   virusMesh: {fileID: 7835296481080320493}
   bulletPos:

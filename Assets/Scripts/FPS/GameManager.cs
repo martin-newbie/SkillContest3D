@@ -51,6 +51,7 @@ namespace FPS
 
         void Start()
         {
+
             if (Stage == 1)
             {
                 StartCoroutine(Stage1MonsterSpawnCoroutine());
