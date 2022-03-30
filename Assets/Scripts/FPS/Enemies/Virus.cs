@@ -11,6 +11,7 @@ namespace FPS
         [SerializeField] List<Transform> bulletPos = new List<Transform>();
 
         float rotX, rotY, rotZ;
+        bool isGoingFront = true;
         private void Start()
         {
             StartCoroutine(BulletSpawn());
@@ -30,7 +31,13 @@ namespace FPS
 
         private void Update()
         {
-            transform.Translate(Vector3.back * Time.deltaTime * moveSpeed);
+            if (isGoingFront)
+            {
+                transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime * 4f);
+                if (transform.position.z >= 80f) isGoingFront = false;
+            }
+            else
+                transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
 
             rotX += Time.deltaTime * 100f;
             rotY += Time.deltaTime * 100f;

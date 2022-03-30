@@ -45,11 +45,23 @@ namespace FPS
         [SerializeField] GameObject Virus;
 
         [Header("Boss")]
+        public int Stage = 1;
         [SerializeField] GameObject Boss_1;
+        [SerializeField] GameObject Boss_2;
 
         void Start()
         {
-            StartCoroutine(MonsterSpawnCoroutine());
+            if (Stage == 1)
+            {
+                StartCoroutine(Stage1MonsterSpawnCoroutine());
+                PainGauge = 10f;
+            }
+            else
+            {
+                StartCoroutine(Stage2MonsterSpawnCoroutine());
+                PainGauge = 30f;
+            }
+
             RealScore.text = score.ToString();
         }
 
@@ -79,7 +91,7 @@ namespace FPS
             }
             else TempScore.gameObject.SetActive(false); 
 
-            if(score >= 1000 && !isBoss)
+            if(score >= 1000 * Stage && !isBoss)
             {
                 BossAppear();
             }
@@ -88,7 +100,10 @@ namespace FPS
         void BossAppear()
         {
             isBoss = true;
-            Boss_1.SetActive(true);
+
+            if (Stage == 1)
+                Boss_1.SetActive(true);
+            else Boss_2.SetActive(true);
         }
 
         void TerrainMove()
@@ -114,19 +129,33 @@ namespace FPS
             }
         }
 
-        IEnumerator MonsterSpawnCoroutine()
+        IEnumerator Stage1MonsterSpawnCoroutine()
         {
             while (!isBoss)
             {
-                MonsterSpawn();
+                MonsterSpawn(Bacteria);
                 yield return new WaitForSeconds(2f);
             }
         }
 
-        void MonsterSpawn()
+        IEnumerator Stage2MonsterSpawnCoroutine()
+        {
+            while (!isBoss)
+            {
+                int rand = Random.Range(0, 2);
+                if (rand == 0)
+                    MonsterSpawn(Bacteria);
+                else if (rand == 1)
+                    MonsterSpawn(Virus);
+
+                yield return new WaitForSeconds(2f);
+            }
+        }
+
+        void MonsterSpawn(GameObject monster)
         {
             Vector3 pos = player.transform.position + new Vector3(Random.Range(-30f, 30f), Random.Range(-10f, 25f), 0f);
-            GameObject monster = Instantiate(Bacteria, pos, Quaternion.identity);
+            GameObject temp = Instantiate(monster, pos, Quaternion.identity);
         }
 
         public void GameOver()
