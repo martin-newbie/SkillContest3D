@@ -14,13 +14,17 @@ namespace FPS
             if (other.CompareTag("Enemy"))
             {
                 other.GetComponentInParent<EnemyBase>().OnDamage(damage);
-
-                Destroy(this.gameObject);
+                DestroyBullet();
             }
             if (other.CompareTag("Wall"))
             {
-                Destroy(this.gameObject);
+                DestroyBullet();
             }
+        }
+
+        protected virtual void DestroyBullet()
+        {
+            Destroy(this.gameObject);
         }
     }
 }

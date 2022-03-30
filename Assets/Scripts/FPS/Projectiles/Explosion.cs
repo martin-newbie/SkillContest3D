@@ -7,9 +7,12 @@ namespace FPS
     public class Explosion : MonoBehaviour
     {
         public float damage;
+        [SerializeField]
+        ParticleSystem explosionParticle;
 
         private void Start()
         {
+            explosionParticle.Play();
             Destroy(gameObject, 1f);
         }
 

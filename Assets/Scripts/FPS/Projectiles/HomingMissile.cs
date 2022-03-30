@@ -12,6 +12,8 @@ namespace FPS
         float timerCur = 0f;
         float speed;
 
+        [SerializeField] GameObject explosion;
+
         public void Init(Transform startPos, Transform endPos, float _speed, float newPointDistanceFromStart, float newPointDistanceFromEnd)
         {
             speed = _speed;
@@ -37,7 +39,10 @@ namespace FPS
 
         void Update()
         {
-            if (timerCur > timerMax) Destroy(gameObject);
+            if (timerCur > timerMax)
+            {
+                DestroyBullet();
+            }
 
             timerCur += Time.deltaTime * speed;
 
@@ -46,6 +51,12 @@ namespace FPS
                 CubicBezierCurve(m_points[0].y, m_points[1].y, m_points[2].y, m_points[3].y),
                 CubicBezierCurve(m_points[0].z, m_points[1].z, m_points[2].z, m_points[3].z)
                 );
+        }
+
+        protected override void DestroyBullet()
+        {
+            Instantiate(explosion, transform.position, Quaternion.identity);
+            base.DestroyBullet();
         }
 
         float CubicBezierCurve(float a, float b, float c, float d)

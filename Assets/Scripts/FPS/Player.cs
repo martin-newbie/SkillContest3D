@@ -50,6 +50,9 @@ namespace FPS
         [SerializeField] Transform frontPos2;
         [SerializeField] float spread;
 
+        [SerializeField] ParticleSystem gunEffect_1;
+        [SerializeField] ParticleSystem gunEffect_2;
+
         [Header("Missile")]
         [SerializeField] float missileDelay;
         [SerializeField] Transform missilePos;
@@ -260,6 +263,8 @@ namespace FPS
                 {
                     Instantiate(bullet, frontPos1.position, frontPos1.rotation * Quaternion.Euler(90, 0, 0) * Quaternion.Euler(Random.insideUnitSphere * spread));
                     Instantiate(bullet, frontPos2.position, frontPos2.rotation * Quaternion.Euler(90, 0, 0) * Quaternion.Euler(Random.insideUnitSphere * spread));
+                    gunEffect_1.Play();
+                    gunEffect_2.Play();
                     curDelay = 0f;
                 }
                 curDelay += Time.deltaTime;

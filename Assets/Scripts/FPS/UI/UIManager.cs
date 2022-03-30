@@ -39,6 +39,7 @@ namespace FPS
 
         public void GameClearUI(float score, float hp, float pg)
         {
+            gameClear.gameObject.SetActive(true);
             gameClear.ResultPrint(score, hp, pg);
         }
 

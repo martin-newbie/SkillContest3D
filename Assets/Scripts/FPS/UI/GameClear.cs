@@ -12,10 +12,11 @@ public class GameClear : MonoBehaviour
     public Text HpScore;
     public Text PgScore; //pain gauge
     public Text TotalScore;
+    public Button Next;
 
     void Start()
     {
-        
+        Next.gameObject.SetActive(false);   
     }
 
     void Update()
@@ -36,6 +37,8 @@ public class GameClear : MonoBehaviour
         yield return StartCoroutine(TextCounting(HpScore, 0, hp));
         yield return StartCoroutine(TextCounting(PgScore, 0, pg));
         yield return StartCoroutine(TextCounting(TotalScore, 0, score + hp + pg));
+        Cursor.visible = true;
+        Next.gameObject.SetActive(true);
     }
 
     IEnumerator TextCounting(Text text, float current, float target)
