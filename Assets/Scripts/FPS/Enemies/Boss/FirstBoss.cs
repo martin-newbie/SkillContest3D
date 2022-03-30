@@ -27,7 +27,8 @@ namespace FPS
         float maxHp;
         public bool finished;
         float eyeDelay = 2f;
-
+        int bulletCount = 3;
+        bool attackAble = false;
         void Start()
         {
             canvas = FindObjectOfType(typeof(Canvas)) as Canvas;
@@ -58,8 +59,10 @@ namespace FPS
             Vector3 dir = player.transform.position - Eye.transform.position;
             Quaternion rot = Quaternion.LookRotation(dir.normalized);
 
-            int offset = 120 / 5;
-            for (int i = offset * -2; i < 120 - 2 * offset; i += offset)
+            int offset = 30;
+            int max = bulletCount == 3 ? 60 : 90;
+
+            for (int i = offset * -((bulletCount - 1) / 2); i < max; i += offset)
             {
                 GameObject temp = Instantiate(straightBullet, spawnPos, rot * Quaternion.Euler(0, i, 0));
                 temp.GetComponent<MoveForward>().moveSpeed = 30f;
@@ -83,6 +86,7 @@ namespace FPS
                 madLight.gameObject.SetActive(true);
                 hpBar.color = new Color(1, 0.69f, 0.7f, 1);
                 hpBar2.color = new Color(1, 0.2f, 0.2f, 1);
+                bulletCount = 5;
             }
             else
             {
@@ -90,8 +94,27 @@ namespace FPS
             }
         }
 
+        public override void OnDamage(float damage)
+        {
+            if (attackAble)
+                base.OnDamage(damage);
+        }
+
+        IEnumerator Appear()
+        {
+            transform.position = new Vector3(0f, -25f, 100f);
+            while (transform.position.y <= 30f)
+            {
+                transform.Translate(Vector3.up * Time.deltaTime * 10f);
+                yield return null;
+            }
+            hpBarContainer.SetActive(true);
+            attackAble = true;
+        }
+
         IEnumerator BossAttack()
         {
+            yield return StartCoroutine(Appear());
             while (!finished)
             {
                 DefaultAttack();
@@ -99,6 +122,17 @@ namespace FPS
             }
 
             GameManager.Instance.GameClear();
+            StartCoroutine(Disappear());
+        }
+
+
+        IEnumerator Disappear()
+        {
+            while (transform.position.y >= -25f)
+            {
+                transform.Translate(Vector3.down * Time.deltaTime * 3f);
+                yield return null;
+            }
         }
 
         IEnumerator EyeMoveCoroutine()

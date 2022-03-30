@@ -13,6 +13,7 @@ namespace FPS
         [SerializeField] Image HPGauge;
         [SerializeField] Image PainGauge;
         public GameClear gameClear;
+        [SerializeField] Image Bleeding;
 
         [Header("Missile")]
         [SerializeField] Text CurMissile;
@@ -35,6 +36,7 @@ namespace FPS
         {
             HPGauge.fillAmount = GameManager.Instance.PlayerHp / 100f;
             PainGauge.fillAmount = GameManager.Instance.PainGauge / 100f;
+            Bleeding.color = new Color(1, 1, 1, 1 - (GameManager.Instance.PlayerHp / 100f));
         }
 
         public void GameClearUI(float score, float hp, float pg)

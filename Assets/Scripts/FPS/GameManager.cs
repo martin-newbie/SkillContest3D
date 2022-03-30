@@ -57,6 +57,8 @@ namespace FPS
             CheckGameOver();
             TerrainMove();
             ScoreLogic();
+
+            if (Input.GetKeyDown(KeyCode.Space)) Score += 100f;
         }
 
         void ScoreLogic()
