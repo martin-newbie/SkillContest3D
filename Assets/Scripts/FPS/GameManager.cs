@@ -51,7 +51,7 @@ namespace FPS
 
         void Start()
         {
-
+            Stage = StatusManager.Instance.stage + 1;
             if (Stage == 1)
             {
                 StartCoroutine(Stage1MonsterSpawnCoroutine());

@@ -136,6 +136,7 @@ namespace FPS
 
                 attackCount++;
             }
+            GameManager.Instance.GameClear();
             yield return StartCoroutine(Disappear());
         }
 
@@ -188,13 +189,13 @@ namespace FPS
         void Divided()
         {
             divided = true;
-            anim.SetTrigger(0);
+            anim.SetTrigger("Trigger_1");
         }
 
         void Merged()
         {
             divided = false;
-            anim.SetTrigger(1);
+            anim.SetTrigger("Trigger_2");
         }
 
         IEnumerator EyeMoveCoroutine()
