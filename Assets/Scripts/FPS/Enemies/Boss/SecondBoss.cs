@@ -33,7 +33,9 @@ namespace FPS
         float eyeDelay = 2f;
         int bulletCount = 3;
         bool attackAble = false;
-        float patternDelay = 5f;
+        float patternDelay = 2f;
+
+        int attackCount = 0;
 
         void Start()
         {
@@ -124,10 +126,15 @@ namespace FPS
                 }
                 yield return new WaitForSeconds(patternDelay);
 
-                int rand = Random.Range(0, 2);
 
-                if (rand == 0 && !divided) Divided();
-                else if (divided) Merged();
+                if (attackCount == 3)
+                {
+                    if (!divided) Divided();
+                    else if (divided) Merged();
+                    attackCount = 0;
+                }
+
+                attackCount++;
             }
             yield return StartCoroutine(Disappear());
         }
@@ -149,7 +156,8 @@ namespace FPS
 
             for (int i = 0; i < 3; i++)
             {
-                Instantiate(straightBullet, spawnPos, rot);
+                GameObject temp = Instantiate(straightBullet, spawnPos, rot);
+                temp.GetComponent<MoveForward>().moveSpeed = 50f;
                 yield return new WaitForSeconds(0.2f);
             }
         }
