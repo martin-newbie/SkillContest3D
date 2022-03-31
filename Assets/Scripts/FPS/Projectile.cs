@@ -6,7 +6,7 @@ namespace FPS
 {
     public abstract class Projectile : MonoBehaviour
     {
-        [SerializeField] protected float damage = 3f;
+        public float damage = 3f;
         [SerializeField] protected float moveSpeed = 15f;
 
         protected virtual void OnTriggerEnter(Collider other)
@@ -16,6 +16,13 @@ namespace FPS
                 other.GetComponentInParent<EnemyBase>().OnDamage(damage);
                 DestroyBullet();
             }
+
+            if(other.CompareTag("Friendly"))
+            {
+                other.GetComponentInParent<Friendly>().OnDamage(damage);
+                DestroyBullet();
+            }
+
             if (other.CompareTag("Wall"))
             {
                 DestroyBullet();

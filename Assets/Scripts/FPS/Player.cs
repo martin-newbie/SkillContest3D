@@ -34,6 +34,9 @@ namespace FPS
 
         [Header("Status")]
         public float Hp;
+        public int GunDamageLevel = 0;
+        public int GunSpreadLevel = 0;
+        public int GunSpeedLevel = 0;
 
         [Header("UI")]
         [SerializeField] UIManager UImanager;
@@ -59,7 +62,7 @@ namespace FPS
         [SerializeField] Projectile Missile;
         [SerializeField] int maxMissile; // alltime mag maximum
         [SerializeField] int loadedMissile; // currently in mag
-        [SerializeField] int curMissile; // currently in inventory
+        public int curMissile; // currently in inventory
         bool nowLoading;
 
         [Header("Homing Missile")]
@@ -70,7 +73,7 @@ namespace FPS
         [SerializeField] Transform homingPos;
         List<GameObject> LockonEnemy = new List<GameObject>();
         List<RectTransform> LockonUIList = new List<RectTransform>();
-        [SerializeField] int curHoming;
+        public int curHoming;
         [SerializeField] int maxHoming;
         [SerializeField] int loadedHoming;
         bool nowShooting;
@@ -94,7 +97,6 @@ namespace FPS
             SetCamera();
             FollowAimPoint();
             SwapWeapon();
-
             Move();
             FollowGun(FrontGun_1.transform);
             FollowGun(FrontGun_2.transform);
@@ -104,6 +106,7 @@ namespace FPS
             HomingLoad();
             UImanager.GetMissileInformation(curMissile, loadedMissile, maxMissile);
             GameManager.Instance.PlayerHp = Hp;
+            Hp = Mathf.Clamp(Hp, 0f, 100f);
             switch (weaponState)
             {
                 case PlayerWeapon.MACHINEGUN:
@@ -259,10 +262,12 @@ namespace FPS
             if (Input.GetMouseButton(0))
             {
                 GunsRotate();
-                if (curDelay >= machinegunDelay)
+                if (curDelay >= machinegunDelay - (GunSpeedLevel * 0.05f))
                 {
-                    Instantiate(bullet, frontPos1.position, frontPos1.rotation * Quaternion.Euler(90, 0, 0) * Quaternion.Euler(Random.insideUnitSphere * spread));
-                    Instantiate(bullet, frontPos2.position, frontPos2.rotation * Quaternion.Euler(90, 0, 0) * Quaternion.Euler(Random.insideUnitSphere * spread));
+                    Projectile tp1 = Instantiate(bullet, frontPos1.position, frontPos1.rotation * Quaternion.Euler(90, 0, 0) * Quaternion.Euler(Random.insideUnitSphere * (spread - GunSpreadLevel * 0.1f)));
+                    Projectile tp2 = Instantiate(bullet, frontPos2.position, frontPos2.rotation * Quaternion.Euler(90, 0, 0) * Quaternion.Euler(Random.insideUnitSphere * (spread - GunSpreadLevel * 0.1f)));
+                    tp1.damage += GunDamageLevel;
+                    tp2.damage += GunDamageLevel;
                     gunEffect_1.Play();
                     gunEffect_2.Play();
                     curDelay = 0f;

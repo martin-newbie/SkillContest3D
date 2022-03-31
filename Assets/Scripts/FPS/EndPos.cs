@@ -13,10 +13,14 @@ namespace FPS
             {
                 Destroy(other.gameObject);
             }
-            else if (other.CompareTag("Enemy"))
+            if (other.CompareTag("Enemy"))
             {
                 GameManager.Instance.PainGauge += other.GetComponent<EnemyBase>().damage / 2;
                 other.GetComponent<EnemyBase>().OnDamage(other.GetComponent<EnemyBase>().Hp);
+            }
+            if(other.CompareTag("Friendly"))
+            {
+                other.GetComponent<Friendly>().OnDamage(other.GetComponent<Friendly>().Hp);
             }
         }
     }

@@ -12,7 +12,7 @@ namespace FPS
         float curScoreDelay = 0f;
         float maxScoreDelay = 2f;
         bool isBoss;
-
+        [SerializeField] Light sunLight;
         [Header("Status")]
         public float PainGauge;
         public float PlayerHp;
@@ -71,7 +71,8 @@ namespace FPS
             CheckGameOver();
             TerrainMove();
             ScoreLogic();
-
+            PainGauge = Mathf.Clamp(PainGauge, 0f, 100f);
+            sunLight.transform.Rotate(Vector3.right * Time.deltaTime * 10f);
             if (Input.GetKeyDown(KeyCode.Space)) Score = 100f;
         }
 
