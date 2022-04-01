@@ -132,13 +132,13 @@ namespace FPS
 
         void HomingLoad()
         {
-            if (homingCurDelay >= homingReloadDelay && loadedHoming < maxHoming && LockonUIList.Count <= 0)
+            if (homingCurDelay >= homingReloadDelay && loadedHoming < maxHoming && LockonUIList.Count <= 0 && curHoming > 0)
             {
                 loadedHoming++;
                 curHoming--;
                 homingCurDelay = 0f;
             }
-            else if (loadedHoming < maxHoming)
+            else if (loadedHoming < maxHoming && curHoming > 0)
                 homingCurDelay += Time.deltaTime;
 
             UImanager.GetHomingLoad(homingCurDelay, homingReloadDelay);
@@ -218,7 +218,7 @@ namespace FPS
                     curDelay = 0f;
                     loadedMissile--;
                 }
-                else if (loadedMissile <= 0 && !nowLoading)
+                else if (loadedMissile <= 0 && !nowLoading && curMissile > 0)
                 {
                     StartCoroutine(MagLoading(5f));
                 }
@@ -227,7 +227,7 @@ namespace FPS
             }
             else curDelay = missileDelay;
 
-            if (Input.GetKeyDown(KeyCode.R) && !nowLoading) StartCoroutine(MagLoading(5f));
+            if (Input.GetKeyDown(KeyCode.R) && !nowLoading && curMissile > 0) StartCoroutine(MagLoading(5f));
         }
 
         IEnumerator MagLoading(float duration)
